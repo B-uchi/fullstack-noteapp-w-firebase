@@ -46,7 +46,7 @@ const Dashboard = () => {
     const fetchNotes = async () => {
       const requestDash = {
         method: "GET",
-        url: "http://localhost:5555/notes",
+        url: "https://notefull-backend.vercel.app/notes",
         headers: {
           Authorization: "Bearer " + localStorage.getItem("@token"),
         },
@@ -67,7 +67,7 @@ const Dashboard = () => {
   const checkLoggedIn = async () => {
     const requestDash = {
       method: "GET",
-      url: "http://localhost:5555/dashboard",
+      url: "https://notefull-backend.vercel.app/dashboard",
       headers: {
         Authorization: "Bearer " + localStorage.getItem("@token"),
       },
