@@ -1,6 +1,6 @@
 import express from "express";
 import mongoose from "mongoose";
-import { createUser, loginUser, signOut } from "./user/createandlogin.js";
+import { createUser, loginUser, logOut } from "./user/createandlogin.js";
 import { createNote } from "./user/createNote.js";
 import authMiddleWare from "./authentication_middleware.js";
 import cors from "cors";
@@ -19,7 +19,7 @@ app.post("/register", createUser);
 app.post("/login", loginUser);
 app.post("/notes", createNote);
 app.get('/notes', fetchNotes);
-app.get('/signout', signOut);
+app.get('/signout', logOut);
 
 
 mongoose
