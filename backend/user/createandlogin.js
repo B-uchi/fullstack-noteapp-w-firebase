@@ -18,9 +18,9 @@ export const createUser = (request, response) => {
         const token = await user.getIdToken(true);
         if (token) {
           console.log("Created user successfully");
-          const userData = { id: token.slice(0, 100), username: username };
+          const userData = { id: user.uid, username: username };
           const user = await User.create(userData);
-          response.json({ token: token });
+          response.json({ token: token, id: user.uid });
           response.status(201);
         }
       })
@@ -70,7 +70,7 @@ export const loginUser = (request, response) => {
         const token = await user.getIdToken(true);
         if (token) {
           console.log("Logged in successfully");
-          response.json({ token: token });
+          response.json({ token: token, id: user.uid });
           response.status(201);
         }
       })

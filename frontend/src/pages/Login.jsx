@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import axios from 'axios'
+import axios from "axios";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -22,12 +22,13 @@ const Login = () => {
       .then((response) => {
         if (!response.error) {
           alert("Login successfully");
-          localStorage.setItem('@token', response.data.token)
-          navigate("/dashboard")
+          localStorage.setItem("@token", response.data.token);
+          localStorage.setItem("@user_tok", response.data.id);
+          navigate("/dashboard");
         }
       })
       .catch((e) => {
-        if(e.response.data) {
+        if (e.response.data) {
           console.log(e.response.data);
           return alert(`${e.response.data.error}`);
         }

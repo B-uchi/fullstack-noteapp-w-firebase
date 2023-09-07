@@ -24,7 +24,8 @@ const Register = () => {
       .then((response) => {
         if (!response.error) {
           alert("User created successfully");
-          localStorage.setItem('@token', response.data.token)
+          localStorage.setItem('@token', response.data.token) 
+          localStorage.setItem('@user_tok', response.data.id) 
           navigate("/dashboard")
         }
       })

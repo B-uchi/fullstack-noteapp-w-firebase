@@ -21,7 +21,10 @@ const Dashboard = () => {
       data: { title, description, fullDate },
       method: "POST",
       url: "https://notefull-backend.vercel.app/notes",
-      headers: { Authorization: "Bearer " + localStorage.getItem("@token") },
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("@token"),
+        Id: localStorage.getItem("@user_tok"),
+      },
     };
 
     axios
@@ -42,25 +45,25 @@ const Dashboard = () => {
       });
   };
 
-  const signOut= async ()=>{
+  const signOut = async () => {
     const signoutRequest = {
-        method: "GET",
-        url: "https://notefull-backend.vercel.app/signout",
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("@token"),
-        },
-      };
-      await axios
-        .request(signoutRequest)
-        .then((response) => {
-          alert('Successfully logged out')
-          localStorage.removeItem("@token")
-          navigate("/");
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+      method: "GET",
+      url: "https://notefull-backend.vercel.app/signout",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("@token"),
+      },
     };
+    await axios
+      .request(signoutRequest)
+      .then((response) => {
+        alert("Successfully logged out");
+        localStorage.removeItem("@token");
+        navigate("/");
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
   useEffect(() => {
     const fetchNotes = async () => {
@@ -69,6 +72,7 @@ const Dashboard = () => {
         url: "https://notefull-backend.vercel.app/notes",
         headers: {
           Authorization: "Bearer " + localStorage.getItem("@token"),
+          Id: localStorage.getItem("@user_tok"),
         },
       };
       await axios
@@ -175,7 +179,12 @@ const Dashboard = () => {
                   </div>
                 </form>
               </div>
-              <button className="p-3 px-5 rounded bg-red-500 mt-10" onClick={signOut}>Sign Out</button>
+              <button
+                className="p-3 px-5 rounded bg-red-500 mt-10"
+                onClick={signOut}
+              >
+                Sign Out
+              </button>
             </div>
           </div>
           <div className="p-5 flex justify-center items-center w-[70%]">
@@ -197,7 +206,7 @@ const Dashboard = () => {
                         </div>
                       </div>
                     ) : (
-                      ""
+                      ""(<p className="bg-red-800">HJKKJJ</p>)
                     )
                   )}
               </div>

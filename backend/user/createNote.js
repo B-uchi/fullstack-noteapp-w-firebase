@@ -4,6 +4,7 @@ import firebaseApp from "../firebase/config.cjs";
 
 export const createNote = (request, response) => {
   const headerToken = request.headers.authorization;
+  const user_id = request.headers.id;
   if (!headerToken) {
     return response.send({ message: "No token provided" }).status(401);
   }
@@ -18,7 +19,7 @@ export const createNote = (request, response) => {
     .verifyIdToken(token)
     .then(async () => {
       if (token) {
-        const user = await User.findOne({ id: token.slice(0, 100) });
+        const user = await User.findOne({ id: user_id });
         const title = request.body.title;
         const description = request.body.description;
         const fullDate = request.body.fullDate;
