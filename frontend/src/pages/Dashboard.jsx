@@ -51,6 +51,7 @@ const Dashboard = () => {
       url: "https://notefull-backend.vercel.app/signout",
       headers: {
         Authorization: "Bearer " + localStorage.getItem("@token"),
+        Id: localStorage.getItem("@user_tok"),
       },
     };
     await axios
