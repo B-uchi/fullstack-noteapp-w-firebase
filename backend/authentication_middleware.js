@@ -3,6 +3,7 @@ import { User } from "./models/models.js";
 
 export const authMiddleware = (request, response, next) => {
   const headerToken = request.headers.authorization;
+  const id = request.headers.id
   if (!headerToken) {
     return response.send({ message: "No token provided" }).status(401);
   }
@@ -17,7 +18,7 @@ export const authMiddleware = (request, response, next) => {
     .verifyIdToken(token)
     .then(async () => {
       if (token) {
-        const user = await User.findOne({ id: token.slice(0, 100) });
+        const user = await User.findOne({ id: id });
         response.status(201).send({username: user.username});
       }
     })

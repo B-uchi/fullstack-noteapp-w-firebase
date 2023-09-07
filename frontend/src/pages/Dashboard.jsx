@@ -94,6 +94,7 @@ const Dashboard = () => {
       url: "https://notefull-backend.vercel.app/dashboard",
       headers: {
         Authorization: "Bearer " + localStorage.getItem("@token"),
+        id: localStorage.getItem("@user_tok"),
       },
     };
     await axios
