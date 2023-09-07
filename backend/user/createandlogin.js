@@ -19,7 +19,7 @@ export const createUser = (request, response) => {
         if (token) {
           console.log("Created user successfully");
           const userData = { id: user.uid, username: username };
-          const user = await User.create(userData);
+          const uuser = await User.create(userData);
           response.json({ token: token, id: user.uid });
           response.status(201);
         }
