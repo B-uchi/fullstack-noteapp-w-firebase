@@ -20,7 +20,7 @@ const Dashboard = () => {
     const postNoteRequest = {
       data: { title, description, fullDate },
       method: "POST",
-      url: "http://localhost:5555/notes",
+      url: "https://notefull-backend.vercel.app/notes",
       headers: { Authorization: "Bearer " + localStorage.getItem("@token") },
     };
 
