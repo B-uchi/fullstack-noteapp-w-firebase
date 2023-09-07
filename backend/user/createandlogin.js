@@ -2,7 +2,8 @@ import { auth } from "../firebase_auth/config.js";
 import { User } from "../models/models.js";
 import {
   createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
+  signInWithEmailAndPassword, 
+  signOut
 } from "firebase/auth";
 
 export const createUser = (request, response) => {
@@ -27,6 +28,35 @@ export const createUser = (request, response) => {
       });
   }
 };
+
+export const logOut = (request, response) => {
+  const headerToken = request.headers.authorization;
+  if (!headerToken) {
+    return response.send({ message: "No token provided" }).status(401);
+  }
+
+  if (headerToken && headerToken.split(" ")[0] !== "Bearer") {
+    response.send({ message: "Invalid token" }).status(401);
+  }
+
+  const token = headerToken.split(" ")[1];
+  firebaseApp
+    .auth()
+    .verifyIdToken(token)
+    .then(async () => {
+      if (token) {
+        const user = await User.findOne({ id: token.slice(0, 100) });
+        signOut(auth).then(() => {
+            response.status(200).send();
+        }).catch((error) => {
+            response.status(403).send({ message: error.message })
+        });
+        response.status(201).send({username: user.username});
+      }
+    })
+    .catch(() => response.status(403).send({ message: "Could not authorize" }));
+  
+  };
 
 
 export const loginUser = (request, response) => {
