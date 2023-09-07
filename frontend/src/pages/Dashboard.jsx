@@ -42,7 +42,7 @@ const Dashboard = () => {
       });
   };
 
-  const signOut=()=>{
+  const signOut= async ()=>{
     const signoutRequest = {
         method: "GET",
         url: "https://notefull-backend.vercel.app/signout",
