@@ -16,7 +16,7 @@ const Register = () => {
 
   const handleRegister = async (email, username, password) => {
     axios
-      .post("https://notefull-backend.vercel.app/register", {
+      .post("http://localhost:5555/register", {
         email,
         username,
         password,

@@ -1,4 +1,4 @@
-import axios, { spread } from "axios";
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -42,11 +42,31 @@ const Dashboard = () => {
       });
   };
 
+const signOut= async ()=>{
+    const signoutRequest = {
+        method: "GET",
+        url: "http://localhost:5555/signout",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("@token"),
+        },
+      };
+      await axios
+        .request(signoutRequest)
+        .then((response) => {
+          alert('Successfully logged out')
+          localStorage.removeItem("@token")
+          navigate("/");
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    };
+
   useEffect(() => {
     const fetchNotes = async () => {
       const requestDash = {
         method: "GET",
-        url: "https://notefull-backend.vercel.app/notes",
+        url: "http://localhost:5555/notes",
         headers: {
           Authorization: "Bearer " + localStorage.getItem("@token"),
         },
@@ -67,7 +87,7 @@ const Dashboard = () => {
   const checkLoggedIn = async () => {
     const requestDash = {
       method: "GET",
-      url: "https://notefull-backend.vercel.app/dashboard",
+      url: "http://localhost:5555/dashboard",
       headers: {
         Authorization: "Bearer " + localStorage.getItem("@token"),
       },
@@ -155,6 +175,7 @@ const Dashboard = () => {
                   </div>
                 </form>
               </div>
+              <button className="p-3 px-5 rounded bg-red-500 mt-10" onClick={signOut}>Sign Out</button>
             </div>
           </div>
           <div className="p-5 flex justify-center items-center w-[70%]">
