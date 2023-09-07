@@ -61,8 +61,6 @@ const Dashboard = () => {
           console.log(e);
         });
     };
-    
-  };
 
   useEffect(() => {
     const fetchNotes = async () => {
