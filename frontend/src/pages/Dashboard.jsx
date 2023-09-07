@@ -20,7 +20,7 @@ const Dashboard = () => {
     const postNoteRequest = {
       data: { title, description, fullDate },
       method: "POST",
-      url: "http://localhost:5555/notes",
+      url: "https://notefull-backend.vercel.app/notes",
       headers: { Authorization: "Bearer " + localStorage.getItem("@token") },
     };
 
@@ -42,10 +42,10 @@ const Dashboard = () => {
       });
   };
 
-const signOut= async ()=>{
+  const signOut= async ()=>{
     const signoutRequest = {
         method: "GET",
-        url: "http://localhost:5555/signout",
+        url: "https://notefull-backend.vercel.app/signout",
         headers: {
           Authorization: "Bearer " + localStorage.getItem("@token"),
         },
@@ -66,7 +66,7 @@ const signOut= async ()=>{
     const fetchNotes = async () => {
       const requestDash = {
         method: "GET",
-        url: "http://localhost:5555/notes",
+        url: "https://notefull-backend.vercel.app/notes",
         headers: {
           Authorization: "Bearer " + localStorage.getItem("@token"),
         },
@@ -87,7 +87,7 @@ const signOut= async ()=>{
   const checkLoggedIn = async () => {
     const requestDash = {
       method: "GET",
-      url: "http://localhost:5555/dashboard",
+      url: "https://notefull-backend.vercel.app/dashboard",
       headers: {
         Authorization: "Bearer " + localStorage.getItem("@token"),
       },

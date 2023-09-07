@@ -46,7 +46,6 @@ export const logOut = (request, response) => {
     .verifyIdToken(token)
     .then(async () => {
       if (token) {
-        console.log('heree')
         const user = await User.findOne({ id: token.slice(0, 100) });
         signOut(auth).then(() => {
             response.status(200).send();
