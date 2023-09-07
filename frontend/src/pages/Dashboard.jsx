@@ -42,6 +42,28 @@ const Dashboard = () => {
       });
   };
 
+  const signOut=()=>{
+    const signoutRequest = {
+        method: "GET",
+        url: "https://notefull-backend.vercel.app/signout",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("@token"),
+        },
+      };
+      await axios
+        .request(requestDash)
+        .then((response) => {
+          alert('Successfully logged out')
+          localStorage.removeItem("@token")
+          navigate("/");
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    };
+    
+  };
+
   useEffect(() => {
     const fetchNotes = async () => {
       const requestDash = {
@@ -155,6 +177,7 @@ const Dashboard = () => {
                   </div>
                 </form>
               </div>
+              <button className="p-3 px-5 rounded bg-red-500 mt-10" onClick={signOut}>Sign Out</button>
             </div>
           </div>
           <div className="p-5 flex justify-center items-center w-[70%]">
