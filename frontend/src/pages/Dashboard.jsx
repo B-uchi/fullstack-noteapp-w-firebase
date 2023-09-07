@@ -51,7 +51,7 @@ const Dashboard = () => {
         },
       };
       await axios
-        .request(requestDash)
+        .request(signoutRequest)
         .then((response) => {
           alert('Successfully logged out')
           localStorage.removeItem("@token")
