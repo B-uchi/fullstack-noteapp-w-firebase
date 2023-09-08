@@ -36,3 +36,32 @@ export const fetchNotes = async (request, response) => {
       }
     });
 };
+
+
+
+export const deleteNote = async (request, response) => {
+  const headerToken = request.headers.authorization;
+  const user_id = request.headers.id;
+  const note_id = request.body.note_id;
+  
+  if (!headerToken) {
+    return response.send({ message: "No token provided" }).status(401);
+  }
+
+  if (headerToken && headerToken.split(" ")[0] !== "Bearer") {
+    response.send({ message: "Invalid token" }).status(401);
+  }
+
+  const token = headerToken.split(" ")[1];
+  let notes = [];
+  firebaseApp
+    .auth()
+    .verifyIdToken(token)
+    .then(async () => {
+      if (token) {
+        const user = await User.findOne({ id: user_id });
+        Note.findByIdAndDelete(note_id)
+        response.status(200).send();
+      }
+    });
+};
