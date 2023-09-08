@@ -2,7 +2,6 @@ import express from "express";
 import mongoose from "mongoose";
 import { createUser, loginUser, logOut } from "./user/createandlogin.js";
 import { createNote } from "./user/createNote.js";
-import { MongoDBURL, PORT } from "./config.js";
 import authMiddleWare from "./authentication_middleware.js";
 import cors from "cors";
 import { fetchNotes } from "./user/fetchNotes.js";
@@ -24,14 +23,14 @@ app.get('/signout', logOut);
 
 
 mongoose
-  .connect(MongoDBURL, {
+  .connect(process.env.MongoDBURL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
   .then(() => {
     console.log("Database connected Sussessfully");
-    app.listen(PORT, () => {
-      console.log(`Server listening on ${PORT}`);
+    app.listen(process.env.PORT, () => {
+      console.log(`Server listening on ${process.env.PORT}`);
     });
   })
   .catch((e) => {
