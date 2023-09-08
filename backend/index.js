@@ -7,7 +7,11 @@ import cors from "cors";
 import { fetchNotes, deleteNote } from "./user/fetchNotes.js";
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: "notefull-frontend.vercel.app",
+  methods: ['GET'.'POST','PUT','DELETE'],
+  allowedHeaders: ['Content-Type'],
+}));
 app.get("/dashboard", authMiddleWare);
 app.use(express.json());
 
