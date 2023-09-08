@@ -1,4 +1,4 @@
-export default const credentials = {
+const credentials = {
   "type": "service_account",
   "project_id": "mern-note-server",
   "private_key_id": process.env.private_key_id,
@@ -11,3 +11,5 @@ export default const credentials = {
   "client_x509_cert_url": process.env.client_x509_cert_url,
   "universe_domain": "googleapis.com"
 }
+
+module.exports = credentials;
