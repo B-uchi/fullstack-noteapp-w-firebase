@@ -59,7 +59,10 @@ export const deleteNote = async (request, response) => {
     .verifyIdToken(token)
     .then(async () => {
       if (token) {
-        const user = await User.findOne({ id: user_id });
+        await User.update(
+          { id: user_id },
+          { $pull: { notes: note_id } } );
+        
         const note = await Note.findOneAndDelete({_id: note_id});
         console.log('Deleted note: ', note)
         response.status(200).send();
