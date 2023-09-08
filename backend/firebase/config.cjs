@@ -1,11 +1,12 @@
 const  firebase = require("firebase-admin")
+const { privateKey } = JSON.parse(process.env.private_key);
 
 const firebaseApp = firebase.initializeApp({
   credential: firebase.credential.cert({
   "type": "service_account",
   "project_id": "mern-note-server",
   "private_key_id": process.env.private_key_id,
-  "private_key": process.env.private_key ? process.env.private_key : "",
+  privateKey,
   "client_email": process.env.client_email,
   "client_id": process.env.client_id,
   "auth_uri": process.env.auth_uri,
