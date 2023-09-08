@@ -43,7 +43,7 @@ export const deleteNote = async (request, response) => {
   const headerToken = request.headers.authorization;
   const user_id = request.headers.id;
   const note_id = request.body.note_id;
-  
+
   if (!headerToken) {
     return response.send({ message: "No token provided" }).status(401);
   }
@@ -60,8 +60,10 @@ export const deleteNote = async (request, response) => {
     .then(async () => {
       if (token) {
         const user = await User.findOne({ id: user_id });
-        Note.findByIdAndDelete(note_id)
+        const note = await Note.findOneAndDelete({_id: note_id});
+        console.log('Deleted note: ', note)
         response.status(200).send();
       }
     });
 };
+
