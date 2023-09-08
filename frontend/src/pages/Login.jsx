@@ -21,7 +21,7 @@ const Login = () => {
       })
       .then((response) => {
         if (!response.error) {
-          alert("Login successfully");
+          alert('Logged in Successfully')
           localStorage.setItem("@token", response.data.token);
           localStorage.setItem("@user_tok", response.data.id);
           navigate("/dashboard");

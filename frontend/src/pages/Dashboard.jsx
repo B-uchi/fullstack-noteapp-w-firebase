@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { BsTrash3 } from "react-icons/bs";
 
 const Dashboard = () => {
   const [notes, setNotes] = useState([]);
@@ -59,6 +60,7 @@ const Dashboard = () => {
       .then((response) => {
         alert("Successfully logged out");
         localStorage.removeItem("@token");
+        localStorage.removeItem("@user_tok");
         navigate("/");
       })
       .catch((e) => {
@@ -88,6 +90,35 @@ const Dashboard = () => {
     };
     fetchNotes();
   }, [hasCreate]);
+
+  const deleteNote = (note_id) => {
+    const deleteNoteRequest = {
+      data: { note_id },
+      method: "POST",
+      url: "https://notefull-backend.vercel.app/delete",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("@token"),
+        Id: localStorage.getItem("@user_tok"),
+      },
+    };
+
+    axios
+      .request(deleteNoteRequest)
+      .then((response) => {
+        if (response.status === 200) {
+          setHasCreate(!hasCreate);
+          alert("Deleted Successfully");
+        }
+      })
+      .catch((e) => {
+        if (e.response.data) {
+          console.log(e.response.data.message);
+          alert(`${e.response.data.message}`);
+        } else {
+          alert("Could not delete...");
+        }
+      });
+  };
 
   const checkLoggedIn = async () => {
     const requestDash = {
@@ -120,7 +151,7 @@ const Dashboard = () => {
     <div className="">
       {shouldPageLoad ? (
         <div className="flex w-full h-[100vh] overflow-hidden">
-          <div className="p-4 w-[30%] bg-blue-400">
+          <div className="p-4 w-[30%] bg-[#27ae60]">
             <div className="flex flex-col justify-center items-center h-full">
               <h1 className="font-bold text-2xl mb-4 text-left w-[95%]">
                 Welcome, {username}!
@@ -196,19 +227,28 @@ const Dashboard = () => {
                   notes.map((note, index) =>
                     note ? (
                       <div
-                        className="bg-amber-300 mb-4 p-3 w-[50%] rounded-md"
+                        className="bg-amber-300 flex justify-between mb-4 p-3 w-[50%] rounded-md"
                         key={index}
                       >
-                        <h2 className="text-3xl font-bold">
-                          Title: {note.title}
-                        </h2>
                         <div className="">
-                          <p>{note.description}</p>
-                          <p>Remind me on: {note.date}</p>
+                          <h2 className="text-3xl font-bold">
+                            Title: {note.title}
+                          </h2>
+                          <div className="">
+                            <p>{note.description}</p>
+                            <p>Remind me on: {note.date}</p>
+                          </div>
+                        </div>
+                        <div className="my-auto cursor-pointer ">
+                          <button
+                            className="bg-red-600 hover:bg-red-400 hover:scale-105 p-3 rounded-lg"
+                            onClick={()=>{deleteNote(note._id)}}
+                          >
+                            <BsTrash3 size={20} color="white" />
+                          </button>
                         </div>
                       </div>
-                    ) : (
-                      ""(<p className="bg-red-800">HJKKJJ</p>)
+                    ) : (''
                     )
                   )}
               </div>
