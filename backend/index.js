@@ -4,7 +4,7 @@ import { createUser, loginUser, logOut } from "./user/createandlogin.js";
 import { createNote } from "./user/createNote.js";
 import authMiddleWare from "./authentication_middleware.js";
 import cors from "cors";
-import { fetchNotes } from "./user/fetchNotes.js";
+import { fetchNotes, deleteNote } from "./user/fetchNotes.js";
 
 const app = express();
 app.use(cors());
@@ -20,6 +20,7 @@ app.post("/login", loginUser);
 app.post("/notes", createNote);
 app.get('/notes', fetchNotes);
 app.get('/signout', logOut);
+app.post("/delete", deleteNote);
 
 
 mongoose
