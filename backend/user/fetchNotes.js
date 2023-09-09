@@ -37,8 +37,6 @@ export const fetchNotes = async (request, response) => {
     });
 };
 
-
-
 export const deleteNote = async (request, response) => {
   const headerToken = request.headers.authorization;
   const user_id = request.headers.id;
@@ -59,11 +57,17 @@ export const deleteNote = async (request, response) => {
     .verifyIdToken(token)
     .then(async () => {
       if (token) {
-        
+        const user = await User.findOne({ id: user_id });
+
+        function deleteObjectByOID(array, oidToDelete) {
+          return array.filter((obj) => {obj !==  `new ObjectId("${oidToDelete}")`});
+        }
+        const newArray = deleteObjectByOID(user.notes, note_id);
+        user.notes = newArray
+        await user.save()
         const note = await Note.findOneAndDelete({_id: note_id});
         console.log('Deleted note: ', note)
         response.status(200).send();
       }
     });
 };
-
