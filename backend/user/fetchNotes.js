@@ -60,7 +60,7 @@ export const deleteNote = async (request, response) => {
         const user = await User.findOne({ id: user_id });
 
         function deleteObjectByOID(array, oidToDelete) {
-          return array.filter((obj) => {obj !==  `new ObjectId("${oidToDelete}")`});
+          return array.filter((obj) => obj._id !== `new ObjectId("${oidToDelete}")`);
         }
         const newArray = deleteObjectByOID(user.notes, note_id);
         user.notes = newArray
